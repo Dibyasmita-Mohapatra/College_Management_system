@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import api from "../../utils/api";
+import ConfirmSaveModal from "./ConfirmSaveModal";
 
 const FacultyProfile = ({ faculty, onClose, onUpdated }) => {
     const BASE_URL = api.defaults.baseURL;
@@ -15,6 +16,7 @@ const FacultyProfile = ({ faculty, onClose, onUpdated }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [error, setError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [showSaveModal, setShowSaveModal] = useState(false);
 
     const [form, setForm] = useState({
         facultyid: faculty?.facultyid || "",
@@ -335,15 +337,29 @@ const FacultyProfile = ({ faculty, onClose, onUpdated }) => {
                     >
                         Cancel
                     </button>
-
                     <button
-                        onClick={handleSave}
+                        onClick={() => setShowSaveModal(true)}
                         className="w-full sm:w-auto px-6 py-2 bg-gray-900 text-white rounded-md text-sm hover:bg-black transition"
                     >
                         {isNew ? "Create Faculty" : "Save Changes"}
                     </button>
                 </div>
             </div>
+            <ConfirmSaveModal
+                show={showSaveModal}
+                title={isNew ? "Confirm Faculty Creation" : "Confirm Faculty Update"}
+                message={
+                    isNew
+                        ? "Are you sure you want to create this faculty?"
+                        : "Are you sure you want to save these changes?"
+                }
+                confirmText={isNew ? "Create" : "Save"}
+                onCancel={() => setShowSaveModal(false)}
+                onConfirm={async () => {
+                    await handleSave();
+                    setShowSaveModal(false);
+                }}
+            />
         </div>
     );
 };
@@ -375,6 +391,7 @@ const Select = ({ label, options, required, ...props }) => (
                 </option>
             ))}
         </select>
+
     </div>
 );
 
