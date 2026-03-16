@@ -1,10 +1,12 @@
-import { app, BrowserWindow, shell } from "electron";
+import { app, BrowserWindow, shell, ipcMain } from "electron";
 import path from "path";
 import { fileURLToPath } from "url";
+import os from "os";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+app.setPath("userData", path.join(os.homedir(), ".college-management-system"));
 let mainWindow;
 
 /* ================= Resolve React Build ================= */
@@ -27,10 +29,6 @@ function handleOAuth(url) {
         const parsed = new URL(url);
         const token = parsed.searchParams.get("token");
         const role = parsed.searchParams.get("role");
-
-        console.log("OAuth success detected");
-        console.log("Token:", token);
-        console.log("Role:", role);
 
         if (!token || !role) return;
 
@@ -64,7 +62,8 @@ function createWindow() {
         backgroundColor: "#ffffff",
         webPreferences: {
             contextIsolation: true,
-            nodeIntegration: false
+            nodeIntegration: false,
+            preload: path.join(__dirname, "preload.js")
         }
     });
 
@@ -106,9 +105,38 @@ function createWindow() {
 
 }
 
-/* ================= App Lifecycle ================= */
+/* ================= Electron Print Handler ================= */
 
+ipcMain.handle("print-marksheet", () => {
+
+    try {
+
+        const win = BrowserWindow.getFocusedWindow() || mainWindow;
+
+        if (!win) return;
+
+        win.webContents.print({
+            silent: false,
+            printBackground: true,
+            margins: {
+                marginType: "default"
+            }
+        });
+
+    } catch (err) {
+        console.error("Print error:", err);
+    }
+
+});
+
+/* ================= App Lifecycle ================= */
 app.whenReady().then(createWindow);
+
+app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+    }
+});
 
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();

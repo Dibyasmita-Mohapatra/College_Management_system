@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "electron": "electron .",
-    "dist": "ELECTRON=true vite build && electron-builder"
+    "dist": "ELECTRON=true vite build && electron-builder",
+    "dist:win": "ELECTRON=true vite build && electron-builder --win"
   },
   "dependencies": {
     "@capacitor/android": "^8.2.0",
@@ -65,6 +66,9 @@
     "linux": {
       "target": "AppImage",
       "category": "Education"
+    },
+    "win": {
+      "target": "nsis"
     },
     "protocols": {
       "name": "CMS OAuth",
