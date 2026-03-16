@@ -60,12 +60,15 @@ function createWindow() {
         minWidth: 900,
         minHeight: 600,
         backgroundColor: "#ffffff",
+        icon: path.join(__dirname, "icon.png"),
+        titleBarStyle: "hiddenInset",
         webPreferences: {
             contextIsolation: true,
             nodeIntegration: false,
             preload: path.join(__dirname, "preload.js")
         }
     });
+    mainWindow.removeMenu();
 
     const indexPath = getIndexPath();
 

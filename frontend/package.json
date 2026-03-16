@@ -53,6 +53,7 @@
     "wait-on": "^9.0.4"
   },
   "build": {
+    "icon": "electron/icon.png",
     "directories": {
       "output": "release/installers"
     },
@@ -68,7 +69,8 @@
       "category": "Education"
     },
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "electron/icon.ico"
     },
     "protocols": {
       "name": "CMS OAuth",
