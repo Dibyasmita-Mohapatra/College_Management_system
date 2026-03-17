@@ -11,3 +11,8 @@ router.get("/dashboard", authMiddleware, controller.getDashboard);
 /* ================= Update Password ================= */
 
 router.put("/password", authMiddleware, controller.updatePassword);
+
+/* ================= Update DOB ================= */
+
+router.put("/dob", authMiddleware, controller.updateDOB);
+
