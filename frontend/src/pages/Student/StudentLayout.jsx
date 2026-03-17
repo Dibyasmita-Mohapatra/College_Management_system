@@ -79,6 +79,17 @@ const StudentLayout = () => {
     const toggleTheme = () => {
         setTheme(prev => prev === "dark" ? "light" : "dark");
     };
+
+    /* ===================== Menu ===================== */
+
+    const menuItems = [
+
+        { name: "Dashboard", path: "/student/dashboard" },
+        { name: "My Profile", path: "/student/profile" },
+        { name: "Attendance", path: "/student/attendance" },
+        { name: "Marksheet", path: "/student/marksheet" }
+
+    ];
     
 
         
