@@ -32,6 +32,35 @@ const StudentLayout = () => {
 
         localStorage.setItem("theme", theme);
     }, [theme]);
+
+    /* ===================== Fetch Student ===================== */
+
+    useEffect(() => {
+
+        if (!token) return;
+
+        const fetchStudent = async () => {
+
+            try {
+
+                const res = await api.get(
+                    "/api/student/dashboard",
+                    {
+                        headers: { Authorization: `Bearer ${token}` }
+                    }
+                );
+
+                setStudent(res.data);
+
+            } catch (error) {
+                console.error(error);
+            }
+
+        };
+
+        fetchStudent();
+
+    }, [token]);
     
 
         
