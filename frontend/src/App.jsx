@@ -150,13 +150,20 @@ function App() {
 
                 {/* ===================== Student ===================== */}
                 <Route
-                    path="/student/dashboard"
+                    path="/student"
                     element={
                         <ProtectedRoute allowedRole="student">
-                            <StudentDashboard />
+                            <StudentLayout />
                         </ProtectedRoute>
                     }
-                />
+                >
+                    <Route path="dashboard" element={<StudentDashboard />} />
+                    <Route path="profile" element={<StudentProfile />} />
+                    <Route path="attendance" element={<StudentAttendance />} />
+                    <Route path="marksheet" element={<StudentMarksheet />} />
+
+
+                </Route>
 
                 {/* Catch All */}
                 <Route path="*" element={<Navigate to="/" replace />} />
