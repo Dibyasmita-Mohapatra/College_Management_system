@@ -107,4 +107,20 @@ const StudentDashboard = () => {
     );
 
 };
+
+const DashboardCard = ({ title, value }) => (
+
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-sm transition-colors">
+
+        <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            {title}
+        </p>
+
+        <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mt-2">
+            {value}
+        </p>
+
+    </div>
+
+);
     
