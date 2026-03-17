@@ -60,3 +60,31 @@ exports.updatePassword = async (req, res) => {
   }
 
 };
+
+
+/* =========================
+   Update Date of Birth
+========================= */
+
+exports.updateDOB = async (req, res) => {
+
+  try {
+
+    const email = req.user.email;
+    const { dateofbirth } = req.body;
+
+    await db.query(
+      "UPDATE students SET dateofbirth=? WHERE emailid=?",
+      [dateofbirth, email]
+    );
+
+    res.json({ message: "DOB updated successfully" });
+
+  } catch (error) {
+
+    console.error(error);
+    res.status(500).json({ message: "DOB update failed" });
+
+  }
+
+};
