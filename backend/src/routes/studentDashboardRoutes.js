@@ -7,3 +7,7 @@ const controller = require("../controllers/studentDashboardController");
 /* ================= Dashboard ================= */
 
 router.get("/dashboard", authMiddleware, controller.getDashboard);
+
+/* ================= Update Password ================= */
+
+router.put("/password", authMiddleware, controller.updatePassword);
