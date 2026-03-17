@@ -94,6 +94,14 @@ const StudentLayout = () => {
     return (
 
         <div className="h-screen flex bg-gray-100 dark:bg-gray-950 overflow-hidden">
+
+            {/* Overlay */}
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/30 z-30 lg:hidden"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
         </div>
     );
 
