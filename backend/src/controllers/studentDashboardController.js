@@ -88,3 +88,30 @@ exports.updateDOB = async (req, res) => {
   }
 
 };
+
+
+/* =========================
+   Get Student Attendance
+========================= */
+
+exports.getStudentAttendance = async (req, res) => {
+
+  try {
+
+    const email = req.user.email;
+
+    const [rows] = await db.query(
+      "SELECT subject, date, status FROM attendance WHERE student_email=?",
+      [email]
+    );
+
+    res.json(rows);
+
+  } catch (error) {
+
+    console.error(error);
+    res.status(500).json({ message: "Error loading attendance" });
+
+  }
+
+};
