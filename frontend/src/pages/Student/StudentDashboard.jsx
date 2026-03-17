@@ -79,4 +79,32 @@ const StudentDashboard = () => {
                 />
 
             </div>
+
+            {/* System Information */}
+
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-sm transition-colors">
+
+                <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wide mb-6">
+                    Student Portal
+                </h3>
+
+                <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+
+                    <p>
+                        Access your attendance reports and marksheets.
+                    </p>
+
+                    <p>
+                        Update your profile information anytime.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    );
+
+};
     
