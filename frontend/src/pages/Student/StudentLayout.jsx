@@ -102,6 +102,55 @@ const StudentLayout = () => {
                     onClick={() => setIsSidebarOpen(false)}
                 />
             )}
+
+            {/* Sidebar */}
+            <aside
+                className={`fixed top-0 left-0 h-screen w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 flex flex-col z-40 transform transition-transform duration-300
+                ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
+                lg:translate-x-0`}
+            >
+
+                {/* Student Info */}
+                <div className="px-6 py-6 border-b border-gray-200 dark:border-gray-700 flex flex-col items-center">
+
+                    {/* Profile Image */}
+                    <img
+                        src={
+                            student?.profilePic
+                                ? `${BASE_URL}/uploads/${student.profilePic}`
+                                : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                        }
+                        alt="profile"
+                        className="w-20 h-20 rounded-full object-cover border-2 border-blue-500 shadow-md mb-3 hover:scale-105 transition"
+                    />
+
+                    <p className="text-sm font-semibold text-gray-800 dark:text-gray-100 text-center">
+                        Student Portal
+                    </p>
+
+                    <p className="text-xs text-gray-400 text-center">
+                        College Management System
+                    </p>
+
+                    {student && (
+                        <div className="mt-4 text-xs space-y-1 text-center">
+
+                            <p className="text-gray-600 dark:text-gray-300">
+                                <b>Name:</b> {student.firstname} {student.lastname}
+                            </p>
+
+                            <p className="text-gray-600 dark:text-gray-300">
+                                <b>Roll:</b> {student.rollnumber}
+                            </p>
+
+                            <p className="text-gray-600 dark:text-gray-300">
+                                <b>Course:</b> {student.Courcecode}
+                            </p>
+
+                        </div>
+                    )}
+
+                </div>
         </div>
     );
 
