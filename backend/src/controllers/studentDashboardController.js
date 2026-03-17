@@ -115,3 +115,30 @@ exports.getStudentAttendance = async (req, res) => {
   }
 
 };
+
+
+/* =========================
+   Get Student Marksheet
+========================= */
+
+exports.getStudentMarksheet = async (req, res) => {
+
+  try {
+
+    const email = req.user.email;
+
+    const [rows] = await db.query(
+      "SELECT subject, marks FROM marksheets WHERE student_email=?",
+      [email]
+    );
+
+    res.json(rows);
+
+  } catch (error) {
+
+    console.error(error);
+    res.status(500).json({ message: "Error loading marksheet" });
+
+  }
+
+};
