@@ -90,6 +90,13 @@ const StudentLayout = () => {
         { name: "Marksheet", path: "/student/marksheet" }
 
     ];
+
+    return (
+
+        <div className="h-screen flex bg-gray-100 dark:bg-gray-950 overflow-hidden">
+        </div>
+    );
+
     
 
         
