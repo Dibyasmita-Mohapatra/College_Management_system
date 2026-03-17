@@ -32,6 +32,10 @@ import FacultyProfile from "./pages/Faculty/FacultyProfile.jsx";
 import FacultyTakeAttendance from "./pages/Faculty/FacultyTakeAttendance";
 
 import StudentDashboard from "./pages/Student/StudentDashboard";
+import StudentLayout from "./pages/Student/StudentLayout.jsx"
+import StudentProfile from "./pages/Student/StudentProfile";
+import StudentAttendance from "./pages/Student/StudentAttendance";
+import StudentMarksheet from "./pages/Student/StudentMarksheet";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 
