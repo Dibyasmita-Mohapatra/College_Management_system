@@ -123,4 +123,6 @@ const DashboardCard = ({ title, value }) => (
     </div>
 
 );
+
+export default StudentDashboard;
     
