@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 import api from "../../utils/api";
+import ConfirmSaveModal from "./ConfirmSaveModal.jsx";
 
 const ImportFacultyModal = ({ token, onClose, onImportSuccess }) => {
     const [file, setFile] = useState(null);
@@ -35,6 +36,7 @@ const ImportFacultyModal = ({ token, onClose, onImportSuccess }) => {
                 const reader = new FileReader();
                 reader.onload = async () => {
                     const filePath = "Faculty_Import_Template.xlsx";
+                    const fileData = reader.result;
 
                     try {
                         let fileExists = false;
@@ -65,7 +67,7 @@ const ImportFacultyModal = ({ token, onClose, onImportSuccess }) => {
                                 try {
                                     await Filesystem.writeFile({
                                         path: filePath,
-                                        data: reader.result,
+                                        data: fileData,
                                         directory: Directory.Documents,
                                         recursive: true,
                                     });
@@ -86,7 +88,7 @@ const ImportFacultyModal = ({ token, onClose, onImportSuccess }) => {
 
                         await Filesystem.writeFile({
                             path: filePath,
-                            data: reader.result,
+                            data: fileData,
                             directory: Directory.Documents,
                             recursive: true,
                         });
@@ -273,6 +275,7 @@ const ImportFacultyModal = ({ token, onClose, onImportSuccess }) => {
                     setLoading(false);
                 }}
                 onConfirm={async () => {
+                    setLoading(true);
                     if (confirmAction) await confirmAction();
                     setConfirmAction(null);
                     setShowConfirm(false);
