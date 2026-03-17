@@ -87,4 +87,6 @@ const StudentMarksheet = () => {
 
 };
 
+export default StudentMarksheet;
+
 
