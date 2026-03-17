@@ -151,6 +151,38 @@ const StudentLayout = () => {
                     )}
 
                 </div>
+
+                {/* Navigation */}
+                <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+
+                    {menuItems.map((item) => {
+
+                        const isActive = location.pathname === item.path;
+
+                        return (
+
+                            <Link
+                                key={item.path}
+                                to={item.path}
+                                onClick={() => {
+                                    if (window.innerWidth < 1024) {
+                                        setIsSidebarOpen(false);
+                                    }
+                                }}
+                                className={`block px-4 py-2 rounded-md text-sm font-medium transition ${
+                                    isActive
+                                        ? "bg-gray-900 text-white dark:bg-gray-700"
+                                        : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                }`}
+                            >
+                                {item.name}
+                            </Link>
+
+                        );
+
+                    })}
+
+                </nav>
         </div>
     );
 
