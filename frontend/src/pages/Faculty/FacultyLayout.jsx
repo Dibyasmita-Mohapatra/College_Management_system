@@ -1,10 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { Sun, Moon } from "lucide-react";
+import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Sun, Moon, Menu } from "lucide-react";
 import api from "../../utils/api";
 
 export default function FacultyLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -61,6 +64,10 @@ export default function FacultyLayout() {
   };
 }, []);
 
+useEffect(() => {
+  setIsSidebarOpen(false);
+}, [location.pathname]);
+
   const lastLoginRaw = user?.lastlogin ?? user?.lastLogin ?? "";
 
   const lastLogin = (() => {
@@ -106,9 +113,20 @@ export default function FacultyLayout() {
   };
 
   return (
-    <div className="h-screen flex bg-gray-100 dark:bg-gray-950 overflow-hidden transition-colors">
-      <div className="flex w-full">
-        <aside className="h-screen w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-colors">
+  <div className="h-screen flex bg-gray-100 dark:bg-gray-950 overflow-hidden transition-colors">
+    {isSidebarOpen && (
+      <div
+        className="fixed inset-0 bg-black/30 z-30 lg:hidden"
+        onClick={() => setIsSidebarOpen(false)}
+      />
+    )}
+
+    <div className="flex w-full relative">
+        <aside
+  className={`fixed top-0 left-0 h-screen w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-colors z-40 transform duration-300 lg:translate-x-0 ${
+    isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+  }`}
+>
           <div className="px-6 py-6 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-md bg-gray-100 dark:bg-gray-800 overflow-hidden flex items-center justify-center">
@@ -141,16 +159,16 @@ export default function FacultyLayout() {
                 </span>
               </div>
 
-              <div className="text-gray-500 dark:text-gray-400">
+              <div className="text-gray-500 dark:text-gray-400 break-words">
                 Last login:{" "}
-                <span className="text-gray-800 dark:text-gray-100 font-medium">
-                  {lastLogin}
+              <span className="text-gray-800 dark:text-gray-100 font-medium">
+              {lastLogin}
                 </span>
               </div>
             </div>
           </div>
 
-          <nav className="flex-1 px-4 py-6 space-y-2">
+          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
             <NavLink
               to="/faculty/dashboard"
               className={({ isActive }) =>
@@ -210,13 +228,22 @@ export default function FacultyLayout() {
           </nav>
         </aside>
 
-        <section className="flex-1 flex flex-col">
-          <header className="h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6 lg:px-8 transition-colors">
-            <div className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-              Faculty Panel
-            </div>
+        <section className="flex-1 flex flex-col lg:ml-64 min-w-0">
+          <header className="h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4 sm:px-6 lg:px-8 transition-colors">
+  <div className="flex items-center gap-3 min-w-0">
+    <button
+      onClick={() => setIsSidebarOpen(true)}
+      className="lg:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+    >
+      <Menu size={20} className="text-gray-700 dark:text-gray-200" />
+    </button>
 
-            <div className="flex items-center gap-6">
+    <div className="text-lg sm:text-2xl font-semibold text-gray-800 dark:text-gray-100 truncate">
+      Faculty Panel
+    </div>
+  </div>
+
+            <div className="flex items-center gap-2 sm:gap-6">
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-300 group"
@@ -244,7 +271,7 @@ export default function FacultyLayout() {
             </div>
           </header>
 
-          <main className="flex-1 p-6 lg:p-8 overflow-y-auto">
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
             <Outlet />
           </main>
         </section>

@@ -47,10 +47,10 @@ export default function FacultyDashboard() {
 }, [token]);
 
   return (
-    <div className="w-full h-[600px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-10 lg:p-12 space-y-10 transition-colors">
+    <div className="w-full min-h-[500px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 sm:p-6 lg:p-10 space-y-6 sm:space-y-8 transition-colors">
       {/* Page Title */}
       <div>
-        <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+        <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100">
           Faculty Dashboard
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
@@ -74,7 +74,7 @@ export default function FacultyDashboard() {
         />
 
         {/* System Information */}
-        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 shadow-sm transition-colors col-span-full">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 sm:p-6 shadow-sm transition-colors col-span-full">
           <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wide mb-6">
             System Overview
           </h3>

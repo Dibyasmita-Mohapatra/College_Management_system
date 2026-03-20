@@ -209,9 +209,9 @@ export default function FacultyTakeAttendance() {
   const isReady = selectedSubject && selectedCourse && selectedSem;
 
   return (
-    <div className="w-full min-h-[600px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-8 lg:p-10 space-y-8 transition-colors">
+    <div className="w-full min-h-[600px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 sm:p-6 lg:p-10 space-y-6 sm:space-y-8 transition-colors">
       <div>
-        <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+        <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100">
           Take Attendance
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
@@ -231,7 +231,7 @@ export default function FacultyTakeAttendance() {
         </div>
       )}
 
-      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 sm:p-6 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4">
         <select
           value={selectedSubject}
           onChange={(e) => {
@@ -266,7 +266,7 @@ export default function FacultyTakeAttendance() {
       </div>
 
       {selectedSubjectObj && (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <InfoCard label="Course" value={selectedCourse} />
           <InfoCard label="Semester / Year" value={selectedSem} />
           <InfoCard label="Date" value={todayDate} />
@@ -276,7 +276,7 @@ export default function FacultyTakeAttendance() {
       {isReady && (
         <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm overflow-hidden">
           <div className="w-full overflow-x-auto">
-            <table className="w-full text-xs sm:text-sm text-left">
+            <table className="w-full min-w-[640px] text-xs sm:text-sm text-left">
               <thead className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-xs tracking-wide">
                 <tr>
                   <th className="px-4 py-3">Roll No</th>
