@@ -153,7 +153,7 @@ export default function FacultyTakeAttendance() {
     setStudents([]);
     setExistingDates([]);
     setError("");
-  }, 1500);
+  }, 1200);
 
   return;
 }
@@ -199,7 +199,7 @@ export default function FacultyTakeAttendance() {
       setStudents([]);
       setExistingDates([]);
       setSuccess("");
-      }, 600);
+      }, 1200);
     } catch (err) {
       console.error("Save attendance error:", err);
       setError(err?.response?.data?.message || "Failed to save attendance.");

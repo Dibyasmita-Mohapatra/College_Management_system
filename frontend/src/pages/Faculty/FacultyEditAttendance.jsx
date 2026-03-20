@@ -31,6 +31,7 @@ export default function FacultyEditAttendance() {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [warning, setWarning] = useState("");
   
 
   const todayDate = useMemo(() => {
@@ -193,6 +194,28 @@ export default function FacultyEditAttendance() {
     
   ]);
 
+
+useEffect(() => {
+  if (!selectedDate) {
+    setWarning("");
+    return;
+  }
+
+  if (selectedDate !== todayDate) {
+    setWarning("Attendance can only be edited on today's date.");
+
+    const timer = setTimeout(() => {
+      setWarning("");
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }
+
+  setWarning("");
+}, [selectedDate, todayDate]);
+
+
+
   const toggleStudent = (id) => {
     if (!canEdit) return;
 
@@ -277,11 +300,11 @@ export default function FacultyEditAttendance() {
         </div>
       )}
 
-      {!canEdit && selectedDate && (
-        <div className="p-3 rounded-md text-sm bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300">
-          Attendance can only be edited on today&apos;s date.
-        </div>
-      )}
+      {warning && (
+  <div className="p-3 rounded-md text-sm bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300">
+    {warning}
+  </div>
+)}
 
       <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 sm:p-6 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4">
         <select
