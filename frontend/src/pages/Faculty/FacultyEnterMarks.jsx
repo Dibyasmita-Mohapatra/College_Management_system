@@ -123,6 +123,21 @@ export default function FacultyEnterMarks() {
     try {
       const maxTheory = Number(selectedSubjectObj?.theorymarks || 0);
       const maxPractical = Number(selectedSubjectObj?.practicalmarks || 0);
+      const hasAnyMarks = students.some((student) => {
+      const theoryValue = marks[student.rollnumber]?.theory;
+      const practicalValue = marks[student.rollnumber]?.practical;
+
+      return theoryValue !== "" || practicalValue !== "";
+      });
+
+      if (!hasAnyMarks) {
+        setError("Please enter marks before saving.");
+        setSuccess("");
+        setTimeout(() => {
+        setError("");
+        }, 1200);
+        return;
+    }
 
       for (const student of students) {
         const theory = Number(marks[student.rollnumber]?.theory || 0);
@@ -228,11 +243,26 @@ export default function FacultyEnterMarks() {
             <InfoCard label="Course" value={selectedCourse} />
             <InfoCard label="Subject" value={selectedSubjectObj?.subjectname} />
             <InfoCard label="Semester / Year" value={selectedSem} />
-            <InfoCard
-            label="Full Marks"
-            value={`${selectedSubjectObj?.theorymarks ?? 0} / ${selectedSubjectObj?.practicalmarks ?? 0}`}
-             />
+           <div className="bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-700 rounded-md p-2 space-y-1">
+          <div>
+           <p className="text-[9px] text-gray-500 dark:text-gray-400 uppercase leading-tight">
+            Theory
+           </p>
+           <p className="text-xs font-semibold text-gray-800 dark:text-gray-100 leading-tight">
+           {selectedSubjectObj?.theorymarks ?? 0}
+          </p>
         </div>
+
+        <div className="border-t border-gray-200 dark:border-gray-700 pt-1">
+        <p className="text-[9px] text-gray-500 dark:text-gray-400 uppercase leading-tight">
+         Practical
+        </p>
+        <p className="text-xs font-semibold text-gray-800 dark:text-gray-100 leading-tight">
+        {selectedSubjectObj?.practicalmarks ?? 0}
+       </p>
+      </div>
+     </div>
+    </div>
        )}
 
       {isReady && (
