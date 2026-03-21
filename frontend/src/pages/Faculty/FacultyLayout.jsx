@@ -260,10 +260,10 @@ useEffect(() => {
 
             <div className="flex items-center gap-2 sm:gap-6">
               <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-300 group"
-                title="Toggle theme"
-              >
+  onClick={toggleTheme}
+  className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-300 group focus:outline-none focus:ring-0 focus-visible:outline-none"
+  title="Toggle theme"
+>
                 {theme === "dark" ? (
                   <Sun
                     size={20}
@@ -286,7 +286,7 @@ useEffect(() => {
             </div>
           </header>
 
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+          <main className="flex-1 p-2 sm:p-4 lg:p-8 overflow-y-auto">
             <Outlet />
           </main>
         </section>
