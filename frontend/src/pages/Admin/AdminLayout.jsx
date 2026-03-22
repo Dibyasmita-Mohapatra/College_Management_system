@@ -1,4 +1,5 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import {
@@ -24,6 +25,9 @@ const AdminLayout = () => {
     const [admin, setAdmin] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [openSections, setOpenSections] = useState({});
+    const [isOffline, setIsOffline] = useState(!navigator.onLine);
+    const [checking, setChecking] = useState(false);
+    const [retryError, setRetryError] = useState("");
 
     const [theme, setTheme] = useState(() => {
         const savedTheme = localStorage.getItem("theme");
@@ -75,6 +79,18 @@ const AdminLayout = () => {
         fetchAdmin();
 
     }, [token]);
+
+    useEffect(() => {
+        if (isOffline) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [isOffline]);
 
     /* ===================== Logout ===================== */
 
@@ -173,7 +189,61 @@ const AdminLayout = () => {
 
     }, [location.pathname]);
 
+    useEffect(() => {
+        const handleOffline = () => setIsOffline(true);
+        const handleOnline = () => setIsOffline(false);
+
+        window.addEventListener("offline", handleOffline);
+        window.addEventListener("online", handleOnline);
+
+        return () => {
+            window.removeEventListener("offline", handleOffline);
+            window.removeEventListener("online", handleOnline);
+        };
+    }, []);
+
     return (
+        <>
+            {isOffline &&
+                createPortal(
+                    <div className="fixed inset-0 z-[99999] flex items-center justify-center backdrop-blur-sm bg-black/30">
+                        <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg text-center max-w-sm w-full">
+
+                            <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                                You're offline
+                            </p>
+
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                                Please check your internet connection to continue.
+                            </p>
+
+                            <button
+                                onClick={async () => {
+                                    setChecking(true);
+                                    setRetryError("");
+
+                                    try {
+                                        await api.get("/api/admin/profile", {
+                                            headers: { Authorization: `Bearer ${token}` }
+                                        });
+
+                                        setIsOffline(false);
+                                        setChecking(false);
+                                    } catch (err) {
+                                        setChecking(false);
+                                        setRetryError("Still offline or server unreachable.");
+                                    }
+                                }}
+                                className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-md text-sm"
+                            >
+                                {checking ? "Checking..." : "Try Again"}
+                            </button>
+
+                        </div>
+                    </div>,
+                    document.body
+                )
+            }
 
         <div className="h-screen flex bg-gray-100 dark:bg-gray-950 overflow-hidden transition-colors">
 
@@ -395,7 +465,8 @@ const AdminLayout = () => {
 
             </div>
 
-        </div>
+            </div>
+            </>
     );
 };
 
