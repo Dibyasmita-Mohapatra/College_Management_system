@@ -31,6 +31,19 @@ export default function FacultyEnterMarks() {
   const [success, setSuccess] = useState("");
   const [showSaveModal, setShowSaveModal] = useState(false);
 
+
+  useEffect(() => {
+  if (!error) return;
+
+  const timer = setTimeout(() => {
+    setError("");
+  }, 1200);
+
+  return () => clearTimeout(timer);
+}, [error]);
+
+
+
   useEffect(() => {
     const fetchAssignedSubjects = async () => {
       try {
@@ -133,13 +146,10 @@ export default function FacultyEnterMarks() {
       });
 
       if (!hasAnyMarks) {
-        setError("Please enter marks before saving.");
-        setSuccess("");
-        setTimeout(() => {
-        setError("");
-        }, 1200);
-        return;
-    }
+  setError("Please enter marks before saving.");
+  setSuccess("");
+  return;
+}
 
       for (const student of students) {
         const theory = Number(marks[student.rollnumber]?.theory || 0);
